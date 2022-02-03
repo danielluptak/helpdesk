@@ -16,6 +16,7 @@ class Ticket(models.Model):
     it_assigned = models.ForeignKey(
         'accounts.CustomUser',
         null=True,
+        blank=True,
         on_delete=models.PROTECT,
         related_name= 'it_for_ticket'
     )
