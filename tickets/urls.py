@@ -4,6 +4,7 @@ from .views import (
     TicketUpdateView,
     TicketDetailView,
     TicketDeleteView,
+    TicketCreateView,
 )
 
 
@@ -14,6 +15,7 @@ urlpatterns = [
         TicketDetailView.as_view(), name='ticket_detail'),
     path('<int:pk>/delete/',
         TicketDeleteView.as_view(), name='ticket_delete'),
+    path('new/', TicketCreateView.as_view(), name='ticket_new'),
 
     path('', TicketListView.as_view(), name='ticket_list'),
 ]
