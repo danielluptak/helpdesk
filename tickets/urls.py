@@ -6,6 +6,7 @@ from .views import (
     TicketDeleteView,
     TicketCreateView,
 )
+from . import views 
 
 
 urlpatterns = [
@@ -18,4 +19,6 @@ urlpatterns = [
     path('new/', TicketCreateView.as_view(), name='ticket_new'),
 
     path('', TicketListView.as_view(), name='ticket_list'),
+    
+    path('key', views.gen_secret_key)
 ]

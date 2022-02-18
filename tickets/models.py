@@ -7,6 +7,7 @@ class Ticket(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField(max_length=1000)
     date = models.DateTimeField(auto_now_add=True)
+    attachment = models.FileField(upload_to="images", null=True, blank=True)
     status = models.CharField(max_length=30)
     importance = models.CharField(max_length=50)
     author = models.ForeignKey(
