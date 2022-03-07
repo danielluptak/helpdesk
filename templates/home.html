@@ -4,8 +4,11 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
+</br>
 {% if user.is_authenticated %}
-    Hi {{ user.username }}! You are {{user.age }} years old, woah.
+    You are <b>{{ user.username }}</b>, woah.
+</br>
+<hr>
     <p><a href="{% url 'logout' %}">Log Out</a></p>
 {% else %}
     <p>You are not logged in</p>

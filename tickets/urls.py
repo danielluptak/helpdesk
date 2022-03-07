@@ -5,18 +5,22 @@ from .views import (
     TicketDetailView,
     TicketDeleteView,
     TicketCreateView,
+    TicketCommentView,
 )
 from . import views 
 
 
 urlpatterns = [
-    path('<int:pk>/edit/',
+    path('ticket/<int:pk>/edit/',
         TicketUpdateView.as_view(), name='ticket_edit'),
-    path('<int:pk>/',
+    path('ticket/<int:pk>/',
         TicketDetailView.as_view(), name='ticket_detail'),
-    path('<int:pk>/delete/',
+    path('ticket/<int:pk>/delete/',
         TicketDeleteView.as_view(), name='ticket_delete'),
-    path('new/', TicketCreateView.as_view(), name='ticket_new'),
+    path('ticket/new/', 
+        TicketCreateView.as_view(), name='ticket_new'),
+    path('ticket/<int:pk>/comment/', 
+        TicketCommentView.as_view(), name='add_comment'),
 
     path('', TicketListView.as_view(), name='ticket_list'),
     

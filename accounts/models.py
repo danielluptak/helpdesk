@@ -4,4 +4,3 @@ from django.db import models
 class CustomUser (AbstractUser):
     is_customer = models.BooleanField('customer status', default=False)
     is_it = models.BooleanField('IT status', default=False)
-    age = models.PositiveIntegerField(null=True, blank=True)
