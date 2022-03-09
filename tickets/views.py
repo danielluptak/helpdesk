@@ -15,21 +15,21 @@ from django.http import HttpResponse
 
 class TicketListView(LoginRequiredMixin, ListView):
     model = Ticket
-    template_name = 'ticket_list.html'
+    template_name = 'tickets/ticket_list.html'
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
     ordering = ['-id']
 
 class TicketDetailView(LoginRequiredMixin, DetailView):
     model = Ticket
-    template_name = 'ticket_detail.html'
+    template_name = 'tickets/ticket_detail.html'
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
 
 class TicketUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Ticket
     fields = ('title',  'body', 'status', 'it_assigned')
-    template_name = 'ticket_edit.html'
+    template_name = 'tickets/ticket_edit.html'
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
 
@@ -40,7 +40,7 @@ class TicketUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class TicketDeleteView(LoginRequiredMixin, DeleteView):
     model = Ticket
     fields = '__all__'
-    template_name = 'ticket_delete.html'
+    template_name = 'tickets/ticket_delete.html'
     success_url = reverse_lazy('ticket_list')
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
@@ -52,7 +52,7 @@ class TicketDeleteView(LoginRequiredMixin, DeleteView):
 class TicketCreateView(LoginRequiredMixin, CreateView):
     model = Ticket
     form_class = TicketForm
-    template_name = 'ticket_new.html'
+    template_name = 'tickets/ticket_new.html'
     # fields = ('title', 'body', 'importance', 'attachment')
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
@@ -67,7 +67,7 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
 class TicketCommentView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForm
-    template_name = 'add_comment.html'
+    template_name = 'tickets/add_comment.html'
     #fields = ('body',)
     success_url = reverse_lazy('ticket_list')
     login_url = '/accounts/login/'

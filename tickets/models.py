@@ -31,7 +31,7 @@ class Ticket(models.Model):
         'accounts.CustomUser',
         null=True,
         blank=True,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name= 'it_for_ticket'
     )
 

@@ -1,0 +1,28 @@
+<!-- templates/info_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Information{% endblock title %}
+
+{% block content %}
+</br>
+    {% for info in object_list %}
+        <div class="card">
+            <div class="card-header">
+                {% comment %} <a href="{% url 'ticket_detail' ticket.pk %} " <span class="font-weight-bold">{{ ticket.title }}</span></a> &middot; {% endcomment %}
+                <a span class="font-weight-bold">{{ info.title }}</span></a> &middot;
+                <span class="text-muted">by {{ info.author }} |
+                {{ info.date }}</span>
+            </div>
+            <div class="card-body">
+                {{ info.body }}
+            </div>
+            {% if user.id == info.author.id %}
+                <div class="card-footer text-center text-muted">
+                    <a href="{% url 'info_edit' info.pk %}">Edit</a> |
+                    <a href="{% url 'info_delete' info.pk %}">Delete</a>
+                </div>
+            {% endif %}
+        </div>
+        <br />
+    {% endfor %}
+{% endblock content %}

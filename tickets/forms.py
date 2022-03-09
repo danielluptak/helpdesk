@@ -15,7 +15,7 @@ class TicketForm(forms.ModelForm):
         fields = ('title', 'body', 'importance', 'attachment')
         labels = {
             'title': ('Title of your ticket'),
-            'body': ('This is where you can write your comment'),
+            'body': ('This is where you can write your body of text'),
             'importance': ('How important is this for your work/order?'),
             'attachment': ('You can add you attchament here:')
         }
