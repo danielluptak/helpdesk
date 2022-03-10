@@ -1,0 +1,29 @@
+<!-- templates/ticket_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Tickets{% endblock title %}
+
+{% block content %}
+</br>
+    {% for ticket in object_list %}
+        {% comment %} {% for ticket.status == 'new' %} {% endcomment %}
+            <div class="card">
+                <div class="card-header">
+                    <a href="{% url 'ticket_detail' ticket.pk %} " <span class="font-weight-bold">{{ ticket.title }}</span></a> &middot;
+                    <span class="text-muted">by {{ ticket.author }} |
+                    {{ ticket.date }}</span>
+                </div>
+                <div class="card-body">
+                    {{ ticket.body }}
+                </div>
+                {% if user.id == ticket.author.id %}
+                    <div class="card-footer text-center text-muted">
+                        <a href="{% url 'ticket_edit' ticket.pk %}">Edit</a> |
+                        <a href="{% url 'ticket_delete' ticket.pk %}">Delete</a>
+                    </div>
+                {% endif %}
+            </div>
+            <br />
+        {% comment %} {% endfor %} {% endcomment %}
+    {% endfor %}
+{% endblock content %}

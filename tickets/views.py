@@ -13,19 +13,50 @@ from django.contrib.auth.mixins import (
 from django.core.management.utils import get_random_secret_key
 from django.http import HttpResponse 
 
+# all tickets
 class TicketListView(LoginRequiredMixin, ListView):
     model = Ticket
     template_name = 'tickets/ticket_list.html'
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
     ordering = ['-id']
+    
+# open tickets
+class OpenTicketListView(LoginRequiredMixin, ListView):
+    model = Ticket
+    template_name = 'tickets/ticket_list.html'
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+    ordering = ['-id']
+ 
+    def get_queryset(self):
+        return Ticket.objects.filter(status='new')
+    
+# in progress tickets
+# class InProgressTicketListView(LoginRequiredMixin, ListView):
+#     model = Ticket
+#     template_name = 'tickets/ticket_list.html'
+#     login_url = '/accounts/login/'
+#     redirect_field_name = 'redirect_to'
+#     ordering = ['-id']
+# # closed  tickets
 
+# class ClosedTicketListView(LoginRequiredMixin, ListView):
+#     model = Ticket
+#     template_name = 'tickets/ticket_list.html'
+#     login_url = '/accounts/login/'
+#     redirect_field_name = 'redirect_to'
+#     ordering = ['-id']
+
+
+# ticket detail
 class TicketDetailView(LoginRequiredMixin, DetailView):
     model = Ticket
     template_name = 'tickets/ticket_detail.html'
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
 
+# ticket edit
 class TicketUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Ticket
     fields = ('title',  'body', 'status', 'it_assigned')
@@ -37,6 +68,7 @@ class TicketUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         obj = self.get_object()
         return obj.author == self.request.user
 
+# ticket delete
 class TicketDeleteView(LoginRequiredMixin, DeleteView):
     model = Ticket
     fields = '__all__'
@@ -49,6 +81,7 @@ class TicketDeleteView(LoginRequiredMixin, DeleteView):
         obj = self.get_object()
         return obj.author == self.request.user
 
+# new ticket creation
 class TicketCreateView(LoginRequiredMixin, CreateView):
     model = Ticket
     form_class = TicketForm
@@ -64,6 +97,7 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
     # def get_success_url(self):
     #     return reverse_lazy('ticket_detail', kwargs={'pk':self.kwargs['pk']})
     
+# ticket comment
 class TicketCommentView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForm
