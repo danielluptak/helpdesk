@@ -13,6 +13,9 @@ from django.contrib.auth.mixins import (
 from django.core.management.utils import get_random_secret_key
 from django.http import HttpResponse 
 
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+
 # all tickets
 class TicketListView(LoginRequiredMixin, ListView):
     model = Ticket
@@ -33,20 +36,27 @@ class OpenTicketListView(LoginRequiredMixin, ListView):
         return Ticket.objects.filter(status='new')
     
 # in progress tickets
-# class InProgressTicketListView(LoginRequiredMixin, ListView):
-#     model = Ticket
-#     template_name = 'tickets/ticket_list.html'
-#     login_url = '/accounts/login/'
-#     redirect_field_name = 'redirect_to'
-#     ordering = ['-id']
-# # closed  tickets
+class InProgressTicketListView(LoginRequiredMixin, ListView):
+    model = Ticket
+    template_name = 'tickets/ticket_list.html'
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+    ordering = ['-id']
 
-# class ClosedTicketListView(LoginRequiredMixin, ListView):
-#     model = Ticket
-#     template_name = 'tickets/ticket_list.html'
-#     login_url = '/accounts/login/'
-#     redirect_field_name = 'redirect_to'
-#     ordering = ['-id']
+    def get_queryset(self):
+        return Ticket.objects.filter(status='progress')
+
+# closed  tickets
+
+class ClosedTicketListView(LoginRequiredMixin, ListView):
+    model = Ticket
+    template_name = 'tickets/ticket_list.html'
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+    ordering = ['-id']
+
+    def get_queryset(self):
+        return Ticket.objects.filter(status='closed')
 
 
 # ticket detail
@@ -96,14 +106,14 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
     
     # def get_success_url(self):
     #     return reverse_lazy('ticket_detail', kwargs={'pk':self.kwargs['pk']})
-    
+
 # ticket comment
 class TicketCommentView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForm
     template_name = 'tickets/add_comment.html'
     #fields = ('body',)
-    success_url = reverse_lazy('ticket_list')
+    # success_url = reverse_lazy('ticket_list')
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
 
@@ -115,10 +125,22 @@ class TicketCommentView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('ticket_detail', kwargs={'pk':self.kwargs['pk']})
 
-    # def form_valid(self, form):
-    #     form.instance.ticket
-    #     form.instance.author = self.request.user
-    #     return super().form_valid(form)
+
+class TicketCommentDeleteView(LoginRequiredMixin, DeleteView):
+    model = Comment
+    fields = '__all__'
+    template_name = 'tickets/delete_comment.html'
+    # success_url = reverse_lazy('ticket_list')
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+
+    def delete(self, *args, **kwargs):
+        self.object = self.get_object()
+        super().delete(*args, **kwargs)
+
+    def get_success_url(self):
+        return reverse_lazy('ticket_detail', kwargs={'pk':self.object.ticket_id})
+
 
 def gen_secret_key(request):
     print(get_random_secret_key())

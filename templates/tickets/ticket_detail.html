@@ -27,10 +27,11 @@
     
     <a href="{% url 'add_comment' ticket.pk %}">Add Comment</a>
     <br/>
+    <hr>
     
         {% for comment in ticket.comments.all %}
             <strong>
-                {{ comment.author }} - {{ comment.date_added }}
+                {{ comment.author }} - {{ comment.date_added }} - <a href="{% url 'delete_comment' ticket.pk comment.pk %}">Delete comment</a>
             </strong>
             </br>
             {{ comment.body }}

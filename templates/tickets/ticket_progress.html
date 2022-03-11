@@ -5,7 +5,6 @@
 {% block content %}
 </br>
     {% for ticket in object_list %}
-        {% comment %} {% for ticket.status == 'new' %} {% endcomment %}
             <div class="card">
                 <div class="card-header">
                     <a href="{% url 'ticket_detail' ticket.pk %} " <span class="font-weight-bold">{{ ticket.title }}</span></a> &middot;

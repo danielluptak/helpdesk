@@ -25,8 +25,8 @@
         {% comment %} {% endif %} {% endcomment %}
         <a class="nav-link" href="{% url 'ticket_list' %}">All Tickets</a>
         <a class="nav-link" href="{% url 'ticket_open'%}">Open Tickets</a>
-        <a class="nav-link" href="#">In Progress Tickets</a>
-        <a class="nav-link disabled" href="#">Closed Tickets</a>
+        <a class="nav-link" href="{% url 'ticket_progress'%}">In Progress Tickets</a>
+        <a class="nav-link disabled" href="{% url 'ticket_closed'%}">Closed Tickets</a>
         <a class="nav-link" href="{% url 'info_list' %}">FAQ (Frequently asked questions)</a>
         <a class="nav-link" href="{% url 'info_list' %}">Knowledge Base</a>
         <a class="nav-link" href="{% url 'register_it' %}">Register IT staff</a>
