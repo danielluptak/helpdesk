@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<br>
     <div class='article-entry'>
         <h2>{{ ticket.title }}</h2>
-        <p>by {{ ticket.author }} | {{ ticket.date }} </p>
+        {% comment %} <p>by {{ ticket.author }} | {{ ticket.date }} </p> {% endcomment %}
         <p>Importance: {{ ticket.get_importance_display }}; Status: {{ ticket.get_status_display }} </p>
         <p>{{ ticket.body }}</p>
         {% if not ticket.attachment%}
@@ -11,6 +12,30 @@
         {% else %}
             <img src="{{ ticket.attachment.url }}">
         {% endif %}
+
+        {% if not ticket.author.profile.profile_pic%}
+            <p>{{ ticket.author }} | {{ ticket.date }} </p>
+        {% else %}
+            <p><img src="{{ ticket.author.profile.profile_pic.url }}" class="rounded-circle" width=60 height=60> 
+                {{ ticket.author }} | {{ ticket.date }} </p>
+        {% endif %}
+
+        <div class="card mb-3" style="max-width: 500px;">
+            <div class="row no-gutters">
+              <div class="col-md-2">
+                <img src="{{ ticket.author.profile.profile_pic.url }}" class="card-img"  width=300 height=140>
+              </div>
+              <div class="col-md-10">
+                <div class="card-body">
+                  <h5 class="card-title">{{ ticket.author }}</h5>
+                  <p class="card-text">Role in the testing: ---not done yet..</p>
+                  <p class="card-text"><small class="text-muted">{{ ticket.date }}</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {% comment %} <p><img src="{{ ticket.author.profile.profile_pic.url }}"> {{ ticket.author }} | {{ ticket.date }} </p> {% endcomment %}
     </div>
     {% if user.id == ticket.author.id %}
     <p><a href="{% url 'ticket_edit' ticket.pk %}">Edit</a> |
