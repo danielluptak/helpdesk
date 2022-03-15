@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}User Profile{% endblock title %}
+
+{% block content %}
+<h1>User Profile</h1>
+
+<div class="card mb-3" style="max-width: 500px;">
+    <div class="row no-gutters">
+      <div class="col-md-2">
+        <img src="{{ ticket.author.profile.profile_pic.url }}" class="card-img"  width=300 height=140>
+      </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title">{{ ticket.author }}</h5>
+          <p class="card-text">Role in the testing: ---not done yet..</p>
+          <p class="card-text"><small class="text-muted">{{ ticket.date }}</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

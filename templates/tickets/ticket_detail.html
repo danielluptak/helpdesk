@@ -15,10 +15,10 @@
         {% endif %}
 
         {% if not ticket.author.profile.profile_pic%}
-            <p>{{ ticket.author }} | {{ ticket.date }} </p>
+            <p>{{ ticket.author }} | <a href="{% url 'profile_page' ticket.author.profile.id %}">Visit profile</a> | {{ ticket.date }} </p>
         {% else %}
             <p><img src="{{ ticket.author.profile.profile_pic.url }}" class="rounded-circle" width=60 height=60> 
-                {{ ticket.author }} | {{ ticket.date }} </p>
+            <p>{{ ticket.author }} | <a href="{% url 'profile_page' ticket.author.profile.id %}">Visit profile</a> | {{ ticket.date }} </p>
         {% endif %}
 
         <div class="card mb-3" style="max-width: 500px;">
@@ -33,7 +33,7 @@
             </div>
               <div class="col-md-10">
                 <div class="card-body">
-                  <h5 class="card-title">{{ ticket.author }}</h5>
+                  <h5 class="card-title"><a href="{% url 'profile_page' ticket.author.profile.id %}">{{ ticket.author }}</a></h5>
                   <p class="card-text">Role in the testing: ---not done yet..</p>
                   <p class="card-text"><small class="text-muted">{{ ticket.date }}</small></p>
                 </div>
