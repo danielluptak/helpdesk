@@ -10,17 +10,17 @@
 <div class="card mb-3" style="max-width: 500px;">
     <div class="row no-gutters">
       <div class="col-md-2">
-        {% if not user.profile_pic%}
+        {% if not page_user.profile_pic%}
         <p><img src="{% static 'thehelpdesk/images/default_pic.jpg' %}" class="rounded-circle" width=60 height=60> </p>
         {% else %}
-            <p><img src="{{ user.profile_pic.url }}" class="rounded-circle" width=60 height=60> 
+            <p><img src="{{ page_user.profile_pic.url }}" class="rounded-circle" width=60 height=60> 
         {% endif %}
       </div>
       <div class="col-md-10">
         <div class="card-body">
-          <h5 class="card-title">{{ user.username }}</h5>
-          <p class="card-text">{{ user.bio }}.</p>
-          <p class="card-text"><small class="text-muted">{{ user.position }}</small></p>
+          <h5 class="card-title">{{ page_user }}</h5>
+          <p class="card-text">{{ page_user.bio }}</p>
+          <p class="card-text"><small class="text-muted">{{ page_user.position }}</small></p>
         </div>
       </div>
     </div>

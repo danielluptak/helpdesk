@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DetailView
+
+from .models import CustomUser
 from .forms import CustomUserCreationForm, CustomUserITForm, EditProfileForm
 
 from django.contrib.auth.mixins import LoginRequiredMixin 
+
+from django.shortcuts import get_object_or_404
 
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
@@ -31,3 +35,43 @@ class UserEditView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         return self.request.user
     
+class ShowProfilePageView(DetailView):
+    model = CustomUser
+    template_name = 'registration/user_profile.html'
+    
+    def get_object(self):
+        return self.request.user
+
+class ShowUsersProfilePageView(DetailView):
+    model = CustomUser
+    template_name = 'registration/different_user_profile.html'
+    
+    def get_context_data(self, *args, **kwargs):
+        # users = CustomUser.objects.all()
+        context = super(ShowUsersProfilePageView, self).get_context_data(*args, **kwargs)
+
+        page_user = get_object_or_404(CustomUser, id=self.kwargs['pk'])
+
+        context["page_user"] = page_user
+        
+        return context
+    
+    
+    
+    
+    
+    # def profile(request, pk):
+    #     request.instance.ticket_id = kwargs['pk']
+    #     form.instance.author_id = self.request.user.pk
+    #     return super().form_valid(request)
+    
+    # def profile(request):
+    #     return render(request)
+    
+    # def get_user_profile(request, username):
+    #     user = CustomUser.objects.get(username=username)
+    #     return render(request, '<int:pk>/different_user_profile.html', {"user":user})
+    
+    # def get_context_data(self, *args, **kwargs):
+    #     context = super(ShowUsersProfilePageView, self).get_context_data(*args, **kwargs)
+    #     get_object_or_404(CustomUser, id=self.kwargs['pk'])

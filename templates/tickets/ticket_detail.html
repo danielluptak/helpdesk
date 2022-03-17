@@ -4,7 +4,8 @@
 {% block content %}
     <div class='article-entry'>
         <h2>{{ ticket.title }}</h2>
-        <p>by {{ ticket.author }} | {{ ticket.date }} </p>
+        <p>by <a href="{% url 'someones_profile_page' ticket.author.id %}">{{ ticket.author }}</a> | {{ ticket.date }} </p>
+        {% comment %} <p> <a href="{% url 'someones_profile_page' ticket.author.id %}">{{ ticket.author }}</a> </p> {% endcomment %}
         <p>Importance: {{ ticket.get_importance_display }}; Status: {{ ticket.get_status_display }} </p>
         <p>{{ ticket.body }}</p>
         {% if not ticket.attachment%}
