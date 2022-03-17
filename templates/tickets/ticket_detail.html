@@ -2,10 +2,9 @@
 {% load static %}
 
 {% block content %}
-<br>
     <div class='article-entry'>
         <h2>{{ ticket.title }}</h2>
-        {% comment %} <p>by {{ ticket.author }} | {{ ticket.date }} </p> {% endcomment %}
+        <p>by {{ ticket.author }} | {{ ticket.date }} </p>
         <p>Importance: {{ ticket.get_importance_display }}; Status: {{ ticket.get_status_display }} </p>
         <p>{{ ticket.body }}</p>
         {% if not ticket.attachment%}
@@ -13,35 +12,14 @@
         {% else %}
             <img src="{{ ticket.attachment.url }}">
         {% endif %}
-
-        {% if not ticket.author.profile.profile_pic%}
-            <p>{{ ticket.author }} | <a href="{% url 'profile_page' ticket.author.profile.id %}">Visit profile</a> | {{ ticket.date }} </p>
+        
+        {% if not ticket.author.profile_pic%}
+        <p><img src="{% static 'thehelpdesk/images/default_pic.jpg' %}" class="rounded-circle" width=60 height=60> </p>
+            <p>{{ ticket.author }} | {{ ticket.date }} </p>
         {% else %}
-            <p><img src="{{ ticket.author.profile.profile_pic.url }}" class="rounded-circle" width=60 height=60> 
-            <p>{{ ticket.author }} | <a href="{% url 'profile_page' ticket.author.profile.id %}">Visit profile</a> | {{ ticket.date }} </p>
+            <p><img src="{{ ticket.author.profile_pic.url }}" class="rounded-circle" width=60 height=60> 
+            <p>{{ ticket.author }} | {{ ticket.date }} </p>
         {% endif %}
-
-        <div class="card mb-3" style="max-width: 500px;">
-            <div class="row no-gutters">
-              <div class="col-md-2">
-        {% if ticket.author.profile.profile_pic %}
-                {% comment %} <img src="{{ ticket.author.profile.profile_pic.url }}" class="card-img"  width=100 height=130> {% endcomment %}
-                <img src="{{ ticket.author.profile.profile_pic.url }}" class="rounded-circle"  width=100 height=100>
-        {% else %}
-                <img src="{% static 'thehelpdesk/images/default_pic.jpg' %}" class="rounded-circle"  width=100 height=100>
-        {% endif %}    
-            </div>
-              <div class="col-md-10">
-                <div class="card-body">
-                  <h5 class="card-title"><a href="{% url 'profile_page' ticket.author.profile.id %}">{{ ticket.author }}</a></h5>
-                  <p class="card-text">Role in the testing: ---not done yet..</p>
-                  <p class="card-text"><small class="text-muted">{{ ticket.date }}</small></p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        {% comment %} <p><img src="{{ ticket.author.profile.profile_pic.url }}"> {{ ticket.author }} | {{ ticket.date }} </p> {% endcomment %}
     </div>
     {% if user.id == ticket.author.id %}
     <p><a href="{% url 'ticket_edit' ticket.pk %}">Edit</a> |
