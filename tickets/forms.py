@@ -1,5 +1,6 @@
 from django import forms
 from .models import Ticket, Comment
+from accounts.models import CustomUser
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -19,3 +20,9 @@ class TicketForm(forms.ModelForm):
             'importance': ('How important is this for your work/order?'),
             'attachment': ('You can add you attchament here:')
         }
+
+class TicketEditForm(forms.ModelForm):
+
+    class Meta:
+        model = Ticket
+        fields = ('title',  'body', 'status', 'it_assigned')

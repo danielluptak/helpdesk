@@ -29,6 +29,7 @@ class Ticket(models.Model):
     )
     it_assigned = models.ForeignKey(
         'accounts.CustomUser',
+        limit_choices_to={'is_it': True},
         null=True,
         blank=True,
         on_delete=models.CASCADE,

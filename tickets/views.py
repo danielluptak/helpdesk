@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy
 from .models import Ticket, Comment
-from .forms import CommentForm, TicketForm
+from .forms import CommentForm, TicketForm, TicketEditForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import (
     LoginRequiredMixin, 
@@ -69,7 +69,8 @@ class TicketDetailView(LoginRequiredMixin, DetailView):
 # ticket edit
 class TicketUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Ticket
-    fields = ('title',  'body', 'status', 'it_assigned')
+    # fields = ('title',  'body', 'status', 'it_assigned')
+    form_class = TicketEditForm
     template_name = 'tickets/ticket_edit.html'
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
